@@ -1,9 +1,17 @@
+import { userBodyValidation } from "../validations/user.validation.js";
 import { loginUser } from "../services/auth.service.js";
 import { createUser } from "../services/user.service.js";
 import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers/responseHandlers.js";
 
 export async function login(req, res) {
   try {
+    const { error, value } = userBodyValidation.validate(req.body);
+
+    if (error) {
+      return handleErrorClient(res, 400, "Error de validación", error.details.map(d => d.message));
+    }
+
+
     const { email, password } = req.body;
     
     if (!email || !password) {
@@ -19,6 +27,13 @@ export async function login(req, res) {
 
 export async function register(req, res) {
   try {
+    const { error, value } = userBodyValidation.validate(req.body);
+
+    if (error) {
+      return handleErrorClient(res, 400, "Error de validación", error.details.map(d => d.message));
+    }
+
+
     const data = req.body;
     
     if (!data.email || !data.password) {
