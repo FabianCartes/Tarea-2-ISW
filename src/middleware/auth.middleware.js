@@ -17,9 +17,8 @@ export function authMiddleware(req, res, next) {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Guarda info del usuario en el request
-    req.user = payload;      // todo el payload (útil si quieres email u otros datos)
-    req.userId = payload.id; // ID directo del usuario, para queries a la BD
+    req.user = payload;      // todo el payload 
+    req.userId = payload.id; // ID directo del usuario
 
     next();
   } catch (error) {
