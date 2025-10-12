@@ -8,7 +8,7 @@ export async function login(req, res) {
     const { error, value } = userBodyValidation.validate(req.body);
 
     if (error) {
-      return handleErrorClient(res, 400, "Error de validación", error.details.map(d => d.message));
+      return handleErrorClient(res, 400, "Error de validacion", error.details.map(d => d.message));
     }
 
 
@@ -30,7 +30,7 @@ export async function register(req, res) {
     const { error, value } = userBodyValidation.validate(req.body);
 
     if (error) {
-      return handleErrorClient(res, 400, "Error de validación", error.details.map(d => d.message));
+      return handleErrorClient(res, 400, "Error de validacion", error.details.map(d => d.message));
     }
 
 
