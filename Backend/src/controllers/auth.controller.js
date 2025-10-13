@@ -5,6 +5,7 @@ import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers
 
 export async function login(req, res) {
   try {
+    console.log("BODY recibido:", req.body);
     const { error, value } = userBodyValidation.validate(req.body);
 
     if (error) {

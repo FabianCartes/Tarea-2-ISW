@@ -17,7 +17,7 @@ export function getPublicProfile(req, res) {
 
 export async function getPrivateProfile(req, res) {
   try {
-    const userId = req.userId; // lo obtengo del middleware JWT
+    const userId = req.user?.id; // lo obtengo del middleware JWT
     const user = await findUserById(userId);
 
     if (!user) {
