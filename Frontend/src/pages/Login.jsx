@@ -21,14 +21,14 @@ const Login = () => {
         }
 
         } catch (error) {
-            console.error('Error al iniciar sesión:', error);
+            console.error('Error al iniciar sesion:', error);
 
             if (error.response && error.response.status === 400) {
-                alert('Datos inválidos. Revisa tu email y contraseña.');
+                alert('Datos invalidos. Revisa tu email y contraseña.');
             } else if (error.response && error.response.status === 401) {
                 alert('Credenciales incorrectas.');
             } else {
-                alert('Error de conexión con el servidor.');
+                alert('Error de conexion con el servidor.');
             }
         }
     };       return (
@@ -36,7 +36,7 @@ const Login = () => {
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md transform transition-all hover:scale-105">
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <h1 className="text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 mb-8">
-                        Iniciar sesión
+                        Iniciar sesion
                     </h1>
                     
                     <div className="space-y-2">
@@ -73,7 +73,7 @@ const Login = () => {
                         type="submit" 
                         className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
                     >
-                        Iniciar sesión
+                        Iniciar sesion
                     </button>
                 </form>
             </div>
