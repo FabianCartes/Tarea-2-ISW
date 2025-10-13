@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../services/auth.service';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -7,9 +8,30 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log({ email, password });
-    };    return (
+    e.preventDefault();
+
+        try {
+        const response = await login({ email, password });
+
+        if (response?.data?.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/home');
+        } else {
+        alert('Credenciales incorrectas.');
+        }
+
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+
+            if (error.response && error.response.status === 400) {
+                alert('Datos inválidos. Revisa tu email y contraseña.');
+            } else if (error.response && error.response.status === 401) {
+                alert('Credenciales incorrectas.');
+            } else {
+                alert('Error de conexión con el servidor.');
+            }
+        }
+    };       return (
         <div className="min-h-screen bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md transform transition-all hover:scale-105">
                 <form className="space-y-6" onSubmit={handleSubmit}>
