@@ -58,10 +58,16 @@ export async function updateProfile(req, res) {
 
 export async function deleteProfile(req, res) {
   try {
-    const userId = req.userId; // del token
+    const userId = parseInt(req.userId, 10);
+
+    if (isNaN(userId)) {
+    return handleErrorClient(res, 400, "ID de usuario inválido en el token");
+    }
+
     await deleteUser(userId);
     handleSuccess(res, 200, "Usuario eliminado exitosamente", { id: userId });
   } catch (error) {
+    console.error("ERROR DETALLADO AL ELIMINAR:", error);
     if (error.status) {
       return handleErrorClient(res, error.status, error.message);
     }

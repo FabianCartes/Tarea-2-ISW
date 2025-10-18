@@ -15,14 +15,11 @@ export async function createUser(data) {
   });
 
   const saved = await userRepository.save(newUser);
-
-  // No devolver password al crear
   const { password, ...userWithoutPassword } = saved;
   return userWithoutPassword;
 }
 
 export async function findUserByEmail(email) {
-  // Útil para login (necesitamos el password hashed)
   return await userRepository.findOneBy({ email });
 }
 
@@ -72,28 +69,18 @@ export async function updateUser(id, data) {
 
 //eliminar usuario
 export async function deleteUser(id) {
-  const userId = Number(id);
-
+  const userId = Number(id);
   const user = await userRepository.findOneBy({ id: userId });
+ 
   if (!user) {
     throw { status: 404, message: "Usuario no encontrado" };
   }
 
-  const queryRunner = AppDataSource.createQueryRunner();
-  await queryRunner.connect();
-  await queryRunner.startTransaction();
-
   try {
-    await queryRunner.manager.remove(user);
-
-    await queryRunner.commitTransaction();
+    await userRepository.remove(user); 
     return true;
   } catch (err) {
-    await queryRunner.rollbackTransaction();
-    // Re-lanzar manteniendo formato de error que usan los controllers
-    if (err.status && err.message) throw err;
-    throw { status: 500, message: "Error al eliminar usuario" };
-  } finally {
-    await queryRunner.release();
+    console.error("!!!ERROR:", err);
+    throw err; 
   }
 }
