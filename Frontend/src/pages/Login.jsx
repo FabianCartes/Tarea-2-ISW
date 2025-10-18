@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -77,6 +78,12 @@ const Login = () => {
                     >
                         Iniciar sesion
                     </button>
+                    <p className="text-center text-sm text-gray-600">
+                            ¿No tienes una cuenta?{' '}
+                        <Link to="/register" className="font-semibold text-purple-600 hover:underline">
+                            Regístrate aquí
+                        </Link>
+                    </p>
                 </form>
             </div>
         </div>
