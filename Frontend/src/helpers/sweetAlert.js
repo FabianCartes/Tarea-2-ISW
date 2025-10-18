@@ -37,3 +37,20 @@ export function deleteDataAlert(onConfirm) {
     }
   });
 }
+
+export function showLogoutConfirm(onConfirm) {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¿Quieres cerrar la sesión actual?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33', // Rojo para "Cerrar Sesión"
+    cancelButtonColor: '#6e7881', // Gris para "Cancelar"
+    confirmButtonText: 'Sí, cerrar sesión',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      onConfirm(); //funcion de confirmacion
+    }
+  });
+}

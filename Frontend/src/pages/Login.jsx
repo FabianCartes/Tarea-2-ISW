@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUser } = useAuth();
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,8 +15,8 @@ const Login = () => {
         try {
         const response = await login({ email, password });
 
-        if (response?.data?.token) {
-        localStorage.setItem('token', response.data.token);
+        if (response?.data?.user) {
+        setUser(response.data.user);
         navigate('/home');
         } else {
         alert('Credenciales incorrectas.');

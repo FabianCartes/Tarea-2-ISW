@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import cookies from 'js-cookie';
+// 1. Importa la función de logout de tu servicio
+import { logout as logoutService } from '../services/auth.service'; // Asegúrate que la ruta sea correcta
 
 const AuthContext = createContext();
 
@@ -28,8 +30,19 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // 2. Crea la función logout que actualiza el estado
+  const logout = async () => {
+    try {
+      await logoutService(); // Llama a tu servicio (que borra cookies/session)
+      setUser(null); // Actualiza el estado de React
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    // 3. Pasa 'logout' en el value
+    <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
